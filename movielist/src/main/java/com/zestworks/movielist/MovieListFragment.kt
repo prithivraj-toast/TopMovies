@@ -1,17 +1,17 @@
 package com.zestworks.movielist
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 class MovieListFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = MovieListFragment()
-    }
 
     private lateinit var viewModel: MovieListViewModel
 
@@ -22,7 +22,13 @@ class MovieListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MovieListViewModel::class.java)
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            MovieListViewModelFactory(requireContext())
+        )[MovieListViewModel::class.java]
 
+        viewModel.viewState.observe(viewLifecycleOwner, Observer {
+            Log.d("test", it.toString())
+        })
     }
 }

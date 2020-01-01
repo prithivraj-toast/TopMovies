@@ -1,13 +1,19 @@
 package com.zestworks.moviedetail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
+import com.zestworks.common.LCE.Content
+import com.zestworks.common.LCE.Error
+import com.zestworks.common.LCE.Loading
 import com.zestworks.moviedetail.databinding.MovieDetailFragmentBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -35,7 +41,33 @@ class MovieDetailFragment : Fragment() {
         val movieID: String = arguments!!["movieID"].toString()
 
         viewModel.viewState(movieID.toInt()).observe(viewLifecycleOwner, Observer {
-            Log.d("test", it.toString())
+            when (it) {
+                Loading -> {
+                    binding.apply {
+                        progressBar.visibility = VISIBLE
+                        content.visibility = GONE
+                    }
+                }
+                is Content -> {
+                    binding.apply {
+                        progressBar.visibility = GONE
+                        content.visibility = VISIBLE
+                        textMovieTitle.text = it.data.title
+                        textMovieOverview.text = it.data.overview
+                        //TODO : UiModel
+                        Glide.with(requireContext())
+                            .load("https://image.tmdb.org/t/p/w780${it.data.backdropPath}")
+                            .into(imageMovieBackdrop)
+                    }
+                }
+                is Error -> {
+                    binding.apply {
+                        progressBar.visibility = GONE
+                        content.visibility = GONE
+                        Snackbar.make(root, it.errorMessage, Snackbar.LENGTH_SHORT).show()
+                    }
+                }
+            }
         })
     }
 }

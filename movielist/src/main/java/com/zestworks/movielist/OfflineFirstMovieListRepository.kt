@@ -34,7 +34,7 @@ class OfflineFirstMovieListRepository(
         }
 
         return roomResultFlow.combine(networkResultFlow) { local, network ->
-            if (network is Error) {
+            if (network is Error && (local as Success).data.isEmpty()) {
                 network
             } else {
                 local

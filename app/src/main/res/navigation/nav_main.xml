@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main.xml"
     app:startDestination="@id/movieListFragment">
 
     <fragment
         android:id="@+id/movieListFragment"
         android:name="com.zestworks.movielist.MovieListFragment"
-        android:label="MovieListFragment" />
+        android:label="MovieListFragment"
+        tools:layout="@layout/movie_list_fragment">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="@string/url_movie_list" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.zestworks.moviedetail.MovieDetailFragment"
+        android:label="MovieDetailFragment"
+        tools:layout="@layout/movie_detail_fragment">
+        <deepLink
+            android:id="@+id/deepLink2"
+            app:uri="@string/url_movie_detail_deep_link" />
+    </fragment>
+
 </navigation>

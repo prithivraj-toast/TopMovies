@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.zestworks.common.LCE.Content
@@ -20,6 +22,15 @@ class MovieListFragment : Fragment() {
 
     private lateinit var viewModel: MovieListViewModel
     private lateinit var binding: MovieListFragmentBinding
+
+    private val movieClickedAction = { id: Int ->
+        findNavController().navigate(
+            resources.getString(
+                R.string.url_movie_detail_formatter,
+                id.toString()
+            ).toUri()
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +60,7 @@ class MovieListFragment : Fragment() {
                         progressBarMovieList.visibility = View.GONE
                         listMovieList.visibility = View.VISIBLE
                         if (listMovieList.adapter == null) {
-                            listMovieList.adapter = MovieListAdapter(it.data)
+                            listMovieList.adapter = MovieListAdapter(it.data, movieClickedAction)
                             listMovieList.layoutManager = LinearLayoutManager(context)
                         } else {
                             (listMovieList.adapter as MovieListAdapter).setData(it.data)

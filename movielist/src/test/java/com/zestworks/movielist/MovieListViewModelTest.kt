@@ -28,7 +28,6 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class MovieListViewModelTest {
     private val mockRepository: MovieListRepository = mockk()
-    private lateinit var movieListViewModel: MovieListViewModel
     private val observer: Observer<LCE<List<Movie>>> = mockk(relaxed = true)
 
     @get:Rule
@@ -44,7 +43,7 @@ class MovieListViewModelTest {
     @Test
     fun `loading data - happy path`() = runBlockingTest {
         every { mockRepository.getMovies() }.returns(goodFlow)
-        movieListViewModel = MovieListViewModel(mockRepository)
+        val movieListViewModel = MovieListViewModel(mockRepository)
         movieListViewModel.viewState.observeForever(observer)
         val dummyItems = goodFlow.toList()
         val success = dummyItems.first() as Success
@@ -59,7 +58,7 @@ class MovieListViewModelTest {
     @Test
     fun `loading data - network request fails`() = runBlockingTest {
         every { mockRepository.getMovies() }.returns(errorFlow)
-        movieListViewModel = MovieListViewModel(mockRepository)
+        val movieListViewModel = MovieListViewModel(mockRepository)
         movieListViewModel.viewState.observeForever(observer)
         observer.apply {
             verifySequence {
@@ -72,7 +71,7 @@ class MovieListViewModelTest {
     @Test
     fun `loading data - network request fails after loading offline data`() = runBlockingTest {
         every { mockRepository.getMovies() }.returns(offlineFlow)
-        movieListViewModel = MovieListViewModel(mockRepository)
+        val movieListViewModel = MovieListViewModel(mockRepository)
         movieListViewModel.viewState.observeForever(observer)
         val dummyItems = offlineFlow.toList()
         val success = dummyItems.first() as Success

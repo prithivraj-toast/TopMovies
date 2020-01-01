@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="url_movie_list">https://www.themoviedb.org/discover</string>
+    <string name="url_movie_detail_deep_link">https://www.themoviedb.org/movie/{movieID}</string>
+    <string name="url_movie_detail_formatter">https://www.themoviedb.org/movie/%1$s</string>
+</resources>

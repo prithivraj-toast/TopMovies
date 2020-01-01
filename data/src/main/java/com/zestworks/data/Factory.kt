@@ -23,7 +23,6 @@ fun getTmdbService(): TMDBService = Retrofit.Builder()
 private fun getOkHttp() = OkHttpClient.Builder()
     .addInterceptor(HttpLoggingInterceptor())
     .addInterceptor {
-
         val newUrl =
             it.request().url().newBuilder()
                 .addQueryParameter("api_key", getAPIKey())

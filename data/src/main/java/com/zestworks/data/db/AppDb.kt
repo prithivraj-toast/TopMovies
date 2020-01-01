@@ -6,9 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.zestworks.data.model.Movie
+import com.zestworks.data.model.MovieDetail
 
 @Database(
-    entities = [Movie::class],
+    entities = [Movie::class, MovieDetail::class],
     version = 1,
     exportSchema = false
 )

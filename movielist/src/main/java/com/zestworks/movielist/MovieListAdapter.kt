@@ -8,7 +8,10 @@ import com.bumptech.glide.Glide
 import com.zestworks.data.model.Movie
 import com.zestworks.movielist.databinding.ListMovieItemBinding
 
-class MovieListAdapter(private var movies: List<Movie>) :
+class MovieListAdapter(
+    private var movies: List<Movie>,
+    private val itemClickCallback: (Int) -> Unit
+) :
     RecyclerView.Adapter<MovieListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
@@ -26,6 +29,9 @@ class MovieListAdapter(private var movies: List<Movie>) :
             // TODO : Move this to a "UiModel" so as to test this logic as this URL can potentially vary in different build flavors.
             Glide.with(holder.itemView.context)
                 .load("https://image.tmdb.org/t/p/w780${movie.posterPath}").into(imagePoster)
+            root.setOnClickListener {
+                itemClickCallback(movies[holder.adapterPosition].id)
+            }
         }
     }
 

@@ -8,10 +8,12 @@ import com.zestworks.common.LCE.Content
 import com.zestworks.common.LCE.Error
 import com.zestworks.common.LCE.Loading
 import com.zestworks.data.model.Movie
+import com.zestworks.movielist.domain.MovieListRepository
 import com.zestworks.movielist.mockdata.DUMMY_ERROR
 import com.zestworks.movielist.mockdata.errorFlow
 import com.zestworks.movielist.mockdata.goodFlow
 import com.zestworks.movielist.mockdata.offlineFlow
+import com.zestworks.movielist.viewmodel.MovieListViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verifySequence
@@ -43,7 +45,8 @@ class MovieListViewModelTest {
     @Test
     fun `loading data - happy path`() = runBlockingTest {
         every { mockRepository.getMovies() }.returns(goodFlow)
-        val movieListViewModel = MovieListViewModel(mockRepository)
+        val movieListViewModel =
+            MovieListViewModel(mockRepository)
         movieListViewModel.viewState.observeForever(observer)
         val dummyItems = goodFlow.toList()
         val success = dummyItems.first() as Success
@@ -58,7 +61,8 @@ class MovieListViewModelTest {
     @Test
     fun `loading data - network request fails`() = runBlockingTest {
         every { mockRepository.getMovies() }.returns(errorFlow)
-        val movieListViewModel = MovieListViewModel(mockRepository)
+        val movieListViewModel =
+            MovieListViewModel(mockRepository)
         movieListViewModel.viewState.observeForever(observer)
         observer.apply {
             verifySequence {
@@ -71,7 +75,8 @@ class MovieListViewModelTest {
     @Test
     fun `loading data - network request fails after loading offline data`() = runBlockingTest {
         every { mockRepository.getMovies() }.returns(offlineFlow)
-        val movieListViewModel = MovieListViewModel(mockRepository)
+        val movieListViewModel =
+            MovieListViewModel(mockRepository)
         movieListViewModel.viewState.observeForever(observer)
         val dummyItems = offlineFlow.toList()
         val success = dummyItems.first() as Success

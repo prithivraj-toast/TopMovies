@@ -2,8 +2,8 @@ package com.zestworks.topmovies
 
 import android.app.Application
 import com.zestworks.data.di.dataModule
-import com.zestworks.moviedetail.movieDetailModule
-import com.zestworks.movielist.movieListModule
+import com.zestworks.moviedetail.di.movieDetailModule
+import com.zestworks.movielist.di.movieListModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

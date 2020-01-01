@@ -5,10 +5,12 @@ import androidx.lifecycle.Observer
 import com.zestworks.common.Data
 import com.zestworks.common.LCE
 import com.zestworks.data.model.MovieDetail
+import com.zestworks.moviedetail.domain.MovieDetailRepository
 import com.zestworks.moviedetail.mockdata.DUMMY_ERROR
 import com.zestworks.moviedetail.mockdata.errorFlow
 import com.zestworks.moviedetail.mockdata.goodFlow
 import com.zestworks.moviedetail.mockdata.offlineFlow
+import com.zestworks.moviedetail.viewmodel.MovieDetailViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verifySequence
@@ -40,7 +42,10 @@ class MovieDetailViewModelTest {
     @Test
     fun `loading movie details - happy path`() = runBlockingTest {
         every { mockRepository.getMovieDetail(any()) }.returns(goodFlow)
-        val movieDetailViewModel = MovieDetailViewModel(mockRepository)
+        val movieDetailViewModel =
+            MovieDetailViewModel(
+                mockRepository
+            )
         movieDetailViewModel.viewState(11).observeForever(observer)
         val dummyItems = goodFlow.toList()
         val success = dummyItems.first() as Data.Success
@@ -55,7 +60,10 @@ class MovieDetailViewModelTest {
     @Test
     fun `loading data - network request fails`() = runBlockingTest {
         every { mockRepository.getMovieDetail(any()) }.returns(errorFlow)
-        val movieListViewModel = MovieDetailViewModel(mockRepository)
+        val movieListViewModel =
+            MovieDetailViewModel(
+                mockRepository
+            )
         movieListViewModel.viewState(11).observeForever(observer)
         observer.apply {
             verifySequence {
@@ -68,7 +76,10 @@ class MovieDetailViewModelTest {
     @Test
     fun `loading data - network request fails after loading offline data`() = runBlockingTest {
         every { mockRepository.getMovieDetail(any()) }.returns(offlineFlow)
-        val movieListViewModel = MovieDetailViewModel(mockRepository)
+        val movieListViewModel =
+            MovieDetailViewModel(
+                mockRepository
+            )
         movieListViewModel.viewState(11).observeForever(observer)
         val dummyItems = offlineFlow.toList()
         val success = dummyItems.first() as Data.Success

@@ -3,6 +3,7 @@ package com.zestworks.movielist
 import com.zestworks.common.Data
 import com.zestworks.data.db.MovieDAO
 import com.zestworks.data.network.TMDBService
+import com.zestworks.movielist.domain.OfflineFirstMovieListRepository
 import com.zestworks.movielist.mockdata.DUMMY_ERROR
 import com.zestworks.movielist.mockdata.dummyResponse
 import io.kotlintest.matchers.collections.shouldContainExactly
@@ -29,7 +30,11 @@ class OfflineFirstRepositoryTest {
 
     @Before
     fun setup() {
-        offlineFirstMovieListRepository = OfflineFirstMovieListRepository(dao, tmdbService)
+        offlineFirstMovieListRepository =
+            OfflineFirstMovieListRepository(
+                dao,
+                tmdbService
+            )
         Dispatchers.setMain(testDispatcher)
     }
 

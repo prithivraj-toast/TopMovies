@@ -1,4 +1,4 @@
-package com.zestworks.movielist
+package com.zestworks.movielist.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zestworks.data.model.Movie
+import com.zestworks.movielist.R
 import com.zestworks.movielist.databinding.ListMovieItemBinding
 
 class MovieListAdapter(
@@ -16,7 +17,13 @@ class MovieListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return MovieListViewHolder(inflater.inflate(R.layout.list_movie_item, parent, false))
+        return MovieListViewHolder(
+            inflater.inflate(
+                R.layout.list_movie_item,
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount(): Int = movies.count()

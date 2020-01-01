@@ -1,4 +1,4 @@
-package com.zestworks.moviedetail
+package com.zestworks.moviedetail.domain
 
 import com.zestworks.common.Data
 import com.zestworks.data.model.MovieDetail

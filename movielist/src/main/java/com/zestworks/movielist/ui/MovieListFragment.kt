@@ -1,4 +1,4 @@
-package com.zestworks.movielist
+package com.zestworks.movielist.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.zestworks.common.LCE.Content
 import com.zestworks.common.LCE.Error
 import com.zestworks.common.LCE.Loading
+import com.zestworks.movielist.R
 import com.zestworks.movielist.databinding.MovieListFragmentBinding
+import com.zestworks.movielist.viewmodel.MovieListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -56,7 +58,11 @@ class MovieListFragment : Fragment() {
                         progressBarMovieList.visibility = View.GONE
                         listMovieList.visibility = View.VISIBLE
                         if (listMovieList.adapter == null) {
-                            listMovieList.adapter = MovieListAdapter(it.data, movieClickedAction)
+                            listMovieList.adapter =
+                                MovieListAdapter(
+                                    it.data,
+                                    movieClickedAction
+                                )
                             listMovieList.layoutManager = LinearLayoutManager(context)
                         } else {
                             (listMovieList.adapter as MovieListAdapter).setData(it.data)

@@ -1,28 +1,29 @@
-package com.zestworks.moviedetail
+package com.zestworks.movielist.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.zestworks.common.Data.Empty
-import com.zestworks.common.Data.Error
-import com.zestworks.common.Data.Success
+import com.zestworks.common.Data
 import com.zestworks.common.LCE
+import com.zestworks.data.model.Movie
+import com.zestworks.movielist.domain.MovieListRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
 @ExperimentalCoroutinesApi
-class MovieDetailViewModel(private val repository: MovieDetailRepository) : ViewModel() {
-    fun viewState(id: Int) = repository.getMovieDetail(id)
+class MovieListViewModel(movieListRepository: MovieListRepository) : ViewModel() {
+    val viewState: LiveData<LCE<List<Movie>>> = movieListRepository.getMovies()
         .map {
             when (it) {
-                is Success -> {
+                is Data.Success -> {
                     LCE.Content(it.data)
                 }
-                is Error -> {
+                is Data.Error -> {
                     LCE.Error(it.errorMessage)
                 }
-                is Empty -> {
+                Data.Empty -> {
                     LCE.Loading
                 }
             }

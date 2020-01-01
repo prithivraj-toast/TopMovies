@@ -1,4 +1,4 @@
-package com.zestworks.movielist
+package com.zestworks.movielist.domain
 
 import com.zestworks.common.Data
 import com.zestworks.data.model.Movie

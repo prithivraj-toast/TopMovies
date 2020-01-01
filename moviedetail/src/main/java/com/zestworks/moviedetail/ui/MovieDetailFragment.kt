@@ -1,4 +1,4 @@
-package com.zestworks.moviedetail
+package com.zestworks.moviedetail.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import com.zestworks.common.LCE.Content
 import com.zestworks.common.LCE.Error
 import com.zestworks.common.LCE.Loading
 import com.zestworks.moviedetail.databinding.MovieDetailFragmentBinding
+import com.zestworks.moviedetail.viewmodel.MovieDetailViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.viewmodel.ext.android.viewModel
 

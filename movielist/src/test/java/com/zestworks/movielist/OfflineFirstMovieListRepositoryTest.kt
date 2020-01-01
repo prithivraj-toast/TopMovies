@@ -21,7 +21,7 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class OfflineFirstRepositoryTest {
+class OfflineFirstMovieListRepositoryTest {
     lateinit var offlineFirstMovieListRepository: OfflineFirstMovieListRepository
     private val dao: MovieDAO = mockk()
     private val tmdbService: TMDBService = mockk()

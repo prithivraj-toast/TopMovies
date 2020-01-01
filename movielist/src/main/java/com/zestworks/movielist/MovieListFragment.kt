@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -16,11 +15,12 @@ import com.zestworks.common.LCE.Error
 import com.zestworks.common.LCE.Loading
 import com.zestworks.movielist.databinding.MovieListFragmentBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.koin.android.viewmodel.ext.android.viewModel
 
 @ExperimentalCoroutinesApi
 class MovieListFragment : Fragment() {
 
-    private lateinit var viewModel: MovieListViewModel
+    private val viewModel: MovieListViewModel by viewModel()
     private lateinit var binding: MovieListFragmentBinding
 
     private val movieClickedAction = { id: Int ->
@@ -42,10 +42,6 @@ class MovieListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            MovieListViewModelFactory(requireContext())
-        )[MovieListViewModel::class.java]
 
         viewModel.viewState.observe(viewLifecycleOwner, Observer {
             when (it) {

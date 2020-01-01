@@ -8,7 +8,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.zestworks.common.LCE.Content
@@ -16,11 +15,13 @@ import com.zestworks.common.LCE.Error
 import com.zestworks.common.LCE.Loading
 import com.zestworks.moviedetail.databinding.MovieDetailFragmentBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.koin.android.viewmodel.ext.android.viewModel
 
 @ExperimentalCoroutinesApi
 class MovieDetailFragment : Fragment() {
     private lateinit var binding: MovieDetailFragmentBinding
-    private lateinit var viewModel: MovieDetailViewModel
+    private val viewModel: MovieDetailViewModel by viewModel()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,10 +33,6 @@ class MovieDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            MovieDetailViewModelFactory(requireContext())
-        )[MovieDetailViewModel::class.java]
 
         //TODO : This link construction and inference can be done inside a class in a new "navigator" module that every feature module depends on.
         val movieID: String = arguments!!["movieID"].toString()
